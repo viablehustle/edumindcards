@@ -23,6 +23,9 @@ jobs:
           node-version: '20' # Or your preferred Node.js version
           cache: 'pnpm' # Or 'npm', 'yarn' depending on your package manager
 
+      - name: Install pnpm
+        run: npm install -g pnpm # Installs pnpm globally
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile # Use --frozen-lockfile for CI environments
 
