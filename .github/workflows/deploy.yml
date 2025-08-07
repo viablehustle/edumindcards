@@ -21,16 +21,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20' # Or your preferred Node.js version
-          cache: 'pnpm' # Or 'npm', 'yarn' depending on your package manager
-
-      - name: Install pnpm
-        run: npm install -g pnpm # Installs pnpm globally
+          cache: 'npm' # Cache npm dependencies
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile # Use --frozen-lockfile for CI environments
+        run: npm install # Uses npm install
 
       - name: Build with Vite
-        run: pnpm run build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
