@@ -17,7 +17,7 @@ const getSubjectInfo = (subject: string) => {
         name: "Geology",
         icon: Mountain,
         gradientFrom: "geology",
-        gradientTo: "purple-600",
+        gradientTo: "geology",
         bgColor: "bg-geology",
         textColor: "geology",
         borderColor: "border-geology"
@@ -27,7 +27,7 @@ const getSubjectInfo = (subject: string) => {
         name: "Mathematics",
         icon: Calculator,
         gradientFrom: "math",
-        gradientTo: "orange-600",
+        gradientTo: "math", 
         bgColor: "bg-math",
         textColor: "math",
         borderColor: "border-math"
@@ -37,7 +37,7 @@ const getSubjectInfo = (subject: string) => {
         name: "Science",
         icon: FlaskConical,
         gradientFrom: "science",
-        gradientTo: "red-600",
+        gradientTo: "science",
         bgColor: "bg-science",
         textColor: "science",
         borderColor: "border-science"
@@ -47,7 +47,7 @@ const getSubjectInfo = (subject: string) => {
         name: "General",
         icon: Mountain,
         gradientFrom: "edu-primary",
-        gradientTo: "blue-600",
+        gradientTo: "edu-primary",
         bgColor: "bg-edu-primary",
         textColor: "edu-primary",
         borderColor: "border-edu-primary"
@@ -85,7 +85,12 @@ export default function Flashcard({ flashcard, onComplete }: FlashcardProps) {
     <div className="card-container">
       <Card className="bg-white shadow-lg border border-gray-200 overflow-hidden animate-fade-in dark:bg-card dark:border-border">
         {/* Card Header */}
-        <div className={`bg-gradient-to-r from-${subjectInfo.gradientFrom} to-${subjectInfo.gradientTo} p-6 text-white`}>
+        <div 
+          className="p-6 text-white"
+          style={{
+            background: `linear-gradient(to right, var(--${subjectInfo.gradientFrom}), var(--${subjectInfo.gradientTo}))`
+          }}
+        >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
