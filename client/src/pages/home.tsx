@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChevronLeft, ChevronRight, Shuffle, GraduationCap, Settings, HelpCircle } from "lucide-react";
 import Flashcard from "@/components/flashcard";
 import SubjectFilter from "@/components/subject-filter";
 import ProgressIndicator from "@/components/progress-indicator";
+import { getAllFlashcards, getFlashcardsBySubject } from "@/data/flashcards";
 import type { Flashcard as FlashcardType } from "@shared/schema";
 
 export default function Home() {
@@ -13,16 +13,12 @@ export default function Home() {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [completedCards, setCompletedCards] = useState(new Set<string>());
 
-  const { data: allFlashcards, isLoading } = useQuery<FlashcardType[]>({
-    queryKey: ["/api/flashcards"],
-  });
-
-  const { data: filteredFlashcards } = useQuery<FlashcardType[]>({
-    queryKey: ["/api/flashcards/subject", selectedSubject],
-    enabled: selectedSubject !== "all" && !!allFlashcards,
-  });
-
-  const flashcards = selectedSubject === "all" ? allFlashcards : filteredFlashcards;
+  const flashcards = useMemo(() => {
+    if (selectedSubject === "all") {
+      return getAllFlashcards();
+    }
+    return getFlashcardsBySubject(selectedSubject);
+  }, [selectedSubject]);
 
   // Reset current card index when subject changes
   useEffect(() => {
@@ -61,13 +57,6 @@ export default function Home() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-edu-primary"></div>
-      </div>
-    );
-  }
 
   if (!flashcards || flashcards.length === 0) {
     return (
